@@ -13,6 +13,9 @@
 		4D22325E2229BA44000C2BB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D22325D2229BA44000C2BB7 /* Assets.xcassets */; };
 		4D2232612229BA44000C2BB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D22325F2229BA44000C2BB7 /* LaunchScreen.storyboard */; };
 		4D22326C2229BA44000C2BB7 /* PickNMixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D22326B2229BA44000C2BB7 /* PickNMixTests.swift */; };
+		4D2232782229BA94000C2BB7 /* Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2232772229BA94000C2BB7 /* Industry.swift */; };
+		4D22327A2229BAD5000C2BB7 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2232792229BAD5000C2BB7 /* Trigger.swift */; };
+		4D22327C2229BAF2000C2BB7 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D22327B2229BAF2000C2BB7 /* Business.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		4D2232672229BA44000C2BB7 /* PickNMixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PickNMixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D22326B2229BA44000C2BB7 /* PickNMixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickNMixTests.swift; sourceTree = "<group>"; };
 		4D22326D2229BA44000C2BB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D2232772229BA94000C2BB7 /* Industry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Industry.swift; sourceTree = "<group>"; };
+		4D2232792229BAD5000C2BB7 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
+		4D22327B2229BAF2000C2BB7 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 		4D2232762229BA50000C2BB7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4D2232772229BA94000C2BB7 /* Industry.swift */,
+				4D2232792229BAD5000C2BB7 /* Trigger.swift */,
+				4D22327B2229BAF2000C2BB7 /* Business.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,8 +214,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D22327C2229BAF2000C2BB7 /* Business.swift in Sources */,
+				4D22327A2229BAD5000C2BB7 /* Trigger.swift in Sources */,
 				4D2232592229BA43000C2BB7 /* ViewController.swift in Sources */,
 				4D2232572229BA43000C2BB7 /* AppDelegate.swift in Sources */,
+				4D2232782229BA94000C2BB7 /* Industry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
