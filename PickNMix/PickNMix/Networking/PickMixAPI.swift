@@ -26,8 +26,33 @@ struct Constants {
 
 class PickMixAPI {
 
+    static func makeRequest() {
+        guard let requestURL = Constants.API.url else {
+            print ("No url")
+            return
+        }
+
+        self.executeRequestURL(requestURL) { (success, error, data) in
+            guard let dataResponse = data,
+                error == nil else {
+                    print(error?.localizedDescription ?? "Response Error")
+                    return }
+
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with:
+                    dataResponse, options: [])
+
+                print(jsonResponse) //Response result
+            }
+            catch let parsingError {
+                print("Error", parsingError)
+            }
+        }
+
+    }
+
     // lightweight request URL
-    static func executeRequestURL(_ requestURL: URL, taskCallback: @escaping (Bool, Error?, Data?) -> ()) {
+    private static func executeRequestURL(_ requestURL: URL, taskCallback: @escaping (Bool, Error?, Data?) -> ()) {
         print ("Attempting URL -- \(requestURL)")
 
         let request: URLRequest = URLRequest(url: requestURL as URL, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: Constants.API.timeout)

@@ -20,18 +20,8 @@ class PickNMixTests: XCTestCase {
     }
 
     func testHTTPService() {
-
-        guard let url = Constants.API.url else {
-            XCTFail("No URL defined")
-            return
-        }
-
-        PickMixAPI.executeRequestURL(url) { (success, error, data) in
-            if (error != nil) {
-                XCTFail("Error -- \(error?.localizedDescription as Any)")
-            }
-        }
-
+        // Bug - Doesn't seem to output anything
+        PickMixAPI.makeRequest()
     }
 
 
