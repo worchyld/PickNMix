@@ -17,40 +17,9 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-m4-h9a">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5C-sN-gYw">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="a5C-sN-gYw" firstAttribute="bottom" secondItem="4j1-3C-OBC" secondAttribute="bottom" id="5l7-Eo-iU2"/>
-                                    <constraint firstAttribute="trailing" secondItem="a5C-sN-gYw" secondAttribute="trailing" id="CZT-hx-e5x"/>
-                                    <constraint firstAttribute="bottom" secondItem="a5C-sN-gYw" secondAttribute="bottom" id="cbE-6Z-pCz"/>
-                                    <constraint firstItem="a5C-sN-gYw" firstAttribute="leading" secondItem="dYJ-m4-h9a" secondAttribute="leading" id="j4M-1F-uwR"/>
-                                    <constraint firstItem="4j1-3C-OBC" firstAttribute="trailing" secondItem="a5C-sN-gYw" secondAttribute="trailing" id="o5j-kX-38Z"/>
-                                    <constraint firstItem="a5C-sN-gYw" firstAttribute="top" secondItem="dYJ-m4-h9a" secondAttribute="top" id="rmG-YF-9fa"/>
-                                </constraints>
-                                <viewLayoutGuide key="safeArea" id="4j1-3C-OBC"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="zzj-Aa-QA7"/>
-                                </connections>
-                            </scrollView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="dYJ-m4-h9a" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="C1c-sp-C00"/>
-                            <constraint firstItem="dYJ-m4-h9a" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HHj-2h-Gry"/>
-                            <constraint firstItem="dYJ-m4-h9a" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Lek-qt-PKn"/>
-                            <constraint firstAttribute="trailing" secondItem="dYJ-m4-h9a" secondAttribute="trailing" id="a6j-Kn-r47"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <connections>
-                        <outlet property="scrollView" destination="dYJ-m4-h9a" id="iSa-Nr-2Ks"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

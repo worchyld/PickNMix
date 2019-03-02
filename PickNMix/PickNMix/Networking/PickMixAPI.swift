@@ -39,17 +39,51 @@ class PickMixAPI {
                     return }
 
             do {
-                let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: [])
+                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
 
-                print(jsonResponse) //Response result
+                parse(jsonResponse: jsonResponse)
+
+//                let decoder = JSONDecoder()
+//                let model = try decoder.decode(Industry.self, from: dataResponse) //Decode JSON Response Data
+//                print(model.name)
+
+
             }
             catch let parsingError {
                 print("Error", parsingError)
             }
         }
+    }
+
+    private static func parse(jsonResponse: Any) {
+
+        guard let jsonArray = jsonResponse as? [String: Any] else {
+            return
+        }
+
+        guard let industries = jsonArray["industries"] as? [String] else {
+            print ("Cannot find industries")
+            return
+        }
+        guard let triggers = jsonArray["triggers"] as? [String] else {
+            print ("Cannot find triggers")
+            return
+        }
+        guard let bmodels = jsonArray["businessModels"] as? [Array<String>] else {
+            print ("Cannot find bmodels")
+            return
+        }
+
+        for item in bmodels {
+            print (item)
+        }
+
+        print (industries)
+        print (triggers)
+        print (bmodels)
 
     }
+
 
     // lightweight request URL
     private static func executeRequestURL(_ requestURL: URL, taskCallback: @escaping (Bool, Error?, Data?) -> ()) {

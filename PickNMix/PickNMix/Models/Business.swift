@@ -9,6 +9,6 @@
 import Foundation
 
 // Business Model
-struct Business {
+struct Business : Decodable{
     let name : String
 }

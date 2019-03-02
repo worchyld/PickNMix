@@ -11,4 +11,9 @@ import Foundation
 // Industry model
 struct Industry {
     let name : String
+
+    init(_ name: String) {
+        self.name = name
+    }
 }
+
