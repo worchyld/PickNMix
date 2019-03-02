@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Gameplaykit
+import GameplayKit
 
 struct PageViewModel {
 	private let industries : [Industry]
@@ -23,23 +23,7 @@ struct PageViewModel {
 
 extension PageViewModel {
 
-
-	// Early attempt at refactor
-	// Could this be done with an enum?
-	func getRandomObjectFrom(array: Array) -> nil {
-		guard array.count > 0 else {
-			return nil
-		}
-
-		let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: array)
-		guard let first = shuffled.first else {
-			return nil
-		}
-		return first
-	}
-
-
-	// Older versions
+	// Probably should be refactored
 
 	func getRandomIndustry() -> String? {
 		guard industries.count > 0 else {
@@ -51,7 +35,7 @@ extension PageViewModel {
 		guard let first = shuffled.first else {
 			return nil
 		}
-		return first
+		return first  as? String
 	}
 
 	func getRandomBusiness() -> String? {
@@ -64,7 +48,7 @@ extension PageViewModel {
 		guard let first = shuffled.first else {
 			return nil
 		}
-		return first
+		return first as? String
 	}
 	func getRandomTrigger() -> String? {
 		guard triggers.count > 0 else {
@@ -76,7 +60,7 @@ extension PageViewModel {
 		guard let first = shuffled.first else {
 			return nil
 		}
-		return first
+		return first as? String
 	}
 
 }

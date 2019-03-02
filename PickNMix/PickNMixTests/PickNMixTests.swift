@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import PickNMix
+@testable import RealmSwift
 
 class PickNMixTests: XCTestCase {
 
@@ -17,11 +18,6 @@ class PickNMixTests: XCTestCase {
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testHTTPService() {
-        // Bug - Doesn't seem to output anything
-        PickMixAPI.makeRequest()
     }
 
 
