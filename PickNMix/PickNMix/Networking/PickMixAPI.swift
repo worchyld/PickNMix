@@ -61,6 +61,10 @@ class PickMixAPI {
             return
         }
 
+        for item in jsonArray {
+            print (item.key)
+        }
+
         guard let industries = jsonArray["industries"] as? [String] else {
             print ("Cannot find industries")
             return

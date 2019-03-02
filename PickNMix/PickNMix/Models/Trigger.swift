@@ -9,6 +9,6 @@
 import Foundation
 
 // Trigger model
-struct Trigger {
+struct Trigger : Decodable {
     let name : String
 }

@@ -9,11 +9,7 @@
 import Foundation
 
 // Industry model
-struct Industry {
+struct Industry : Decodable {
     let name : String
-
-    init(_ name: String) {
-        self.name = name
-    }
 }
 

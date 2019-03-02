@@ -8,7 +8,7 @@
 
 import Foundation
 
-// Business Model
-struct Business : Decodable{
+// BusinessModels
+struct Business : Decodable {
     let name : String
 }
