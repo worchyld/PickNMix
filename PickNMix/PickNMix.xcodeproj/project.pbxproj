@@ -18,10 +18,7 @@
 		4D22327C2229BAF2000C2BB7 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D22327B2229BAF2000C2BB7 /* Business.swift */; };
 		4D22327F2229BF46000C2BB7 /* PageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D22327E2229BF46000C2BB7 /* PageViewModel.swift */; };
 		4D2232842229C117000C2BB7 /* HexColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2232832229C117000C2BB7 /* HexColors.swift */; };
-		4D2232872229C9E4000C2BB7 /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2232862229C9E4000C2BB7 /* HTTPHandler.swift */; };
-		4D2232892229CA02000C2BB7 /* HTTPWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2232882229CA02000C2BB7 /* HTTPWebService.swift */; };
-		4D22328B2229CA2D000C2BB7 /* PickNMixAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D22328A2229CA2D000C2BB7 /* PickNMixAPIService.swift */; };
-		4D22328D2229CA7E000C2BB7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D22328C2229CA7E000C2BB7 /* Result.swift */; };
+		4D223291222A3CCD000C2BB7 /* PickMixAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D223290222A3CCD000C2BB7 /* PickMixAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,10 +47,7 @@
 		4D22327B2229BAF2000C2BB7 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		4D22327E2229BF46000C2BB7 /* PageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewModel.swift; sourceTree = "<group>"; };
 		4D2232832229C117000C2BB7 /* HexColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColors.swift; sourceTree = "<group>"; };
-		4D2232862229C9E4000C2BB7 /* HTTPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
-		4D2232882229CA02000C2BB7 /* HTTPWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPWebService.swift; sourceTree = "<group>"; };
-		4D22328A2229CA2D000C2BB7 /* PickNMixAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickNMixAPIService.swift; sourceTree = "<group>"; };
-		4D22328C2229CA7E000C2BB7 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		4D223290222A3CCD000C2BB7 /* PickMixAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMixAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,10 +141,7 @@
 		4D2232852229C9D6000C2BB7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				4D22328A2229CA2D000C2BB7 /* PickNMixAPIService.swift */,
-				4D2232862229C9E4000C2BB7 /* HTTPHandler.swift */,
-				4D2232882229CA02000C2BB7 /* HTTPWebService.swift */,
-				4D22328C2229CA7E000C2BB7 /* Result.swift */,
+				4D223290222A3CCD000C2BB7 /* PickMixAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -257,12 +248,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D22327C2229BAF2000C2BB7 /* Business.swift in Sources */,
-				4D2232872229C9E4000C2BB7 /* HTTPHandler.swift in Sources */,
-				4D2232892229CA02000C2BB7 /* HTTPWebService.swift in Sources */,
 				4D22327A2229BAD5000C2BB7 /* Trigger.swift in Sources */,
-				4D22328B2229CA2D000C2BB7 /* PickNMixAPIService.swift in Sources */,
+				4D223291222A3CCD000C2BB7 /* PickMixAPI.swift in Sources */,
 				4D22327F2229BF46000C2BB7 /* PageViewModel.swift in Sources */,
-				4D22328D2229CA7E000C2BB7 /* Result.swift in Sources */,
 				4D2232592229BA43000C2BB7 /* ViewController.swift in Sources */,
 				4D2232842229C117000C2BB7 /* HexColors.swift in Sources */,
 				4D2232572229BA43000C2BB7 /* AppDelegate.swift in Sources */,
