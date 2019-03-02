@@ -9,6 +9,12 @@
 import Foundation
 import GameplayKit
 
+enum ModelType : Int {
+    case industry
+    case trigger
+    case business
+}
+
 struct PageViewModel {
 	private let industries : [Industry]
 	private let triggers : [Trigger]
@@ -19,6 +25,17 @@ struct PageViewModel {
 		self.businesses = businesses
 		self.triggers = triggers
 	}
+
+    func getRandomItemFor(model: ModelType)  -> String? {
+        switch model {
+        case .business:
+            return self.getRandomBusiness()
+        case .industry:
+            return self.getRandomIndustry()
+        case .trigger:
+            return self.getRandomTrigger()
+        }
+    }
 }
 
 extension PageViewModel {
