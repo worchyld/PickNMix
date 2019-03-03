@@ -50,32 +50,25 @@ class PickMixAPI {
                     print(error?.localizedDescription ?? "Response Error")
                     return }
 
+            let decoder = JSONDecoder()
             do {
-                //let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-                print (dataResponse)
 
-                //let decoder = JSONDecoder()
-
-                //let businesses = try JSONDecoder().decode(BusinessModels.self, from: dataResponse)
-                let triggers = try JSONDecoder().decode(Trigger.self, from: dataResponse)
-                let industries = try JSONDecoder().decode(Industries.self, from: dataResponse)
-
-                //print (businesses)
-                print (triggers)
-                print (industries)
-
-
-                //let model = try decoder.decode([String:[String]].self, from: dataResponse)
-                //print(model as Any)
+                let model = try decoder.decode(Root.self, from: dataResponse)
+                print(model.industries)
+                print(model.triggers)
+                print(model.businessModels)
 
                 /*
-                // Old parsing code
-                parse(jsonResponse: jsonResponse, { (success, error) in
+                 // Old parsing code
+                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
+
+                old_parse(jsonResponse: jsonResponse, { (success, error) in
                     if (error != nil) {
                         print ("error >>")
                         print (error?.localizedDescription as Any)
                     }
-                })*/
+                })
+                 */
             }
             catch let parsingError {
                 print("Error", parsingError)
@@ -83,7 +76,7 @@ class PickMixAPI {
         }
     }
 
-    private static func parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
+    private static func old_parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
 
         guard let jsonArray = jsonResponse as? [String: Any] else {
             let error = NSError(domain: "Can't find JSON", code: 0, userInfo: nil)
@@ -113,12 +106,7 @@ class PickMixAPI {
         print (businessList)
         print ("--------")
 
-//        var industries:[Industry] = [Industry]()
-//        industryList.forEach { (entry: String) in
-//            industries.append(Industry(name: entry))
-//        }
 
-        // write to db as a test
     }
 
 
