@@ -20,6 +20,9 @@
 		4D2232842229C117000C2BB7 /* HexColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2232832229C117000C2BB7 /* HexColors.swift */; };
 		4D223291222A3CCD000C2BB7 /* PickMixAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D223290222A3CCD000C2BB7 /* PickMixAPI.swift */; };
 		4D223293222A4773000C2BB7 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D223292222A4773000C2BB7 /* Time.swift */; };
+		4D2FAAA1222B120900F39376 /* BusinessEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2FAAA0222B120900F39376 /* BusinessEntity.swift */; };
+		4D2FAAA3222B129E00F39376 /* IndustryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2FAAA2222B129E00F39376 /* IndustryEntity.swift */; };
+		4D2FAAA5222B12BA00F39376 /* TriggerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2FAAA4222B12BA00F39376 /* TriggerEntity.swift */; };
 		88E2FC789B675D6FA061A4E9 /* Pods_PickNMixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA50C7F02EFDCF310B15A59 /* Pods_PickNMixTests.framework */; };
 		92DE304E9F71F6751AE6F550 /* Pods_PickNMix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6106CF6AA53CC5A1E9E4AD /* Pods_PickNMix.framework */; };
 /* End PBXBuildFile section */
@@ -53,6 +56,9 @@
 		4D2232832229C117000C2BB7 /* HexColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColors.swift; sourceTree = "<group>"; };
 		4D223290222A3CCD000C2BB7 /* PickMixAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMixAPI.swift; sourceTree = "<group>"; };
 		4D223292222A4773000C2BB7 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		4D2FAAA0222B120900F39376 /* BusinessEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessEntity.swift; sourceTree = "<group>"; };
+		4D2FAAA2222B129E00F39376 /* IndustryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryEntity.swift; sourceTree = "<group>"; };
+		4D2FAAA4222B12BA00F39376 /* TriggerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerEntity.swift; sourceTree = "<group>"; };
 		A463703675EAE2FFAE147913 /* Pods-PickNMix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNMix.debug.xcconfig"; path = "Target Support Files/Pods-PickNMix/Pods-PickNMix.debug.xcconfig"; sourceTree = "<group>"; };
 		A57B3D30298F085B4636F7CF /* Pods-PickNMixTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNMixTests.release.xcconfig"; path = "Target Support Files/Pods-PickNMixTests/Pods-PickNMixTests.release.xcconfig"; sourceTree = "<group>"; };
 		B7BC02374B412306516AA44E /* Pods-PickNMix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNMix.release.xcconfig"; path = "Target Support Files/Pods-PickNMix/Pods-PickNMix.release.xcconfig"; sourceTree = "<group>"; };
@@ -88,7 +94,6 @@
 				17719ABDAE985E152A4A63E8 /* Pods-PickNMixTests.debug.xcconfig */,
 				A57B3D30298F085B4636F7CF /* Pods-PickNMixTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -141,6 +146,7 @@
 		4D2232762229BA50000C2BB7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4D2FAAA6222B12C900F39376 /* Entities */,
 				4D2232772229BA94000C2BB7 /* Industry.swift */,
 				4D2232792229BAD5000C2BB7 /* Trigger.swift */,
 				4D22327B2229BAF2000C2BB7 /* Business.swift */,
@@ -171,6 +177,16 @@
 				4D223290222A3CCD000C2BB7 /* PickMixAPI.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		4D2FAAA6222B12C900F39376 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				4D2FAAA0222B120900F39376 /* BusinessEntity.swift */,
+				4D2FAAA2222B129E00F39376 /* IndustryEntity.swift */,
+				4D2FAAA4222B12BA00F39376 /* TriggerEntity.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		9B68E4AAB5A1A3A88F28C82E /* Frameworks */ = {
@@ -384,7 +400,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2FAAA1222B120900F39376 /* BusinessEntity.swift in Sources */,
 				4D22327C2229BAF2000C2BB7 /* Business.swift in Sources */,
+				4D2FAAA3222B129E00F39376 /* IndustryEntity.swift in Sources */,
 				4D22327A2229BAD5000C2BB7 /* Trigger.swift in Sources */,
 				4D223291222A3CCD000C2BB7 /* PickMixAPI.swift in Sources */,
 				4D22327F2229BF46000C2BB7 /* PageViewModel.swift in Sources */,
@@ -393,6 +411,7 @@
 				4D223293222A4773000C2BB7 /* Time.swift in Sources */,
 				4D2232572229BA43000C2BB7 /* AppDelegate.swift in Sources */,
 				4D2232782229BA94000C2BB7 /* Industry.swift in Sources */,
+				4D2FAAA5222B12BA00F39376 /* TriggerEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

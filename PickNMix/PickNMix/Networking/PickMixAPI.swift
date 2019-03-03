@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Constants {
     class API {
@@ -24,7 +25,26 @@ struct Constants {
     }
 }
 
+class DatabaseManager {
+
+    public static func getBusinessEntities() -> Results<IndustryEntity>? {
+        let realm = try! Realm()
+        let industries = realm.objects(IndustryEntity.self)
+        return industries
+    }
+}
+
 class PickMixAPI {
+
+    static func checkDBAndMakeRequest() {
+        // Check DB before we do any request
+        // We know the API never changes.
+        guard let industries = DatabaseManager.getBusinessEntities() else {
+            print ("There are no industries on DB")
+            return
+        }
+        print ("There are \(industries.count) industries in DB")
+    }
 
     static func makeRequest() {
         guard let requestURL = Constants.API.url else {
@@ -46,8 +66,6 @@ class PickMixAPI {
 //                let decoder = JSONDecoder()
 //                let model = try decoder.decode(Industry.self, from: dataResponse) //Decode JSON Response Data
 //                print(model.name)
-
-
             }
             catch let parsingError {
                 print("Error", parsingError)
@@ -59,10 +77,6 @@ class PickMixAPI {
 
         guard let jsonArray = jsonResponse as? [String: Any] else {
             return
-        }
-
-        for item in jsonArray {
-            print (item.key)
         }
 
         guard let industries = jsonArray["industries"] as? [String] else {
@@ -78,13 +92,13 @@ class PickMixAPI {
             return
         }
 
+        print (industries)
+        print (triggers)
+        //print (bmodels)
+
         for item in bmodels {
             print (item)
         }
-
-        print (industries)
-        print (triggers)
-        print (bmodels)
 
     }
 

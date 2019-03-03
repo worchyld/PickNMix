@@ -8,6 +8,7 @@
 
 import Foundation
 import GameplayKit
+import RealmSwift
 
 enum ModelType : Int {
     case industry

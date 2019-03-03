@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ViewController: UIViewController, UIScrollViewDelegate {
 
@@ -20,21 +21,24 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnGenerate: UIButton!
 
+    private var model: PageViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        PickMixAPI.makeRequest()
     }
 
     @IBAction func btnGenerateDidPress(_ sender: UIButton) {
+        print("btnGenerateDidPress:")
     }
 
     @objc func reloadData() {
         // Move to a background thread to do some long running work
+        SVProgressHUD.show()
         DispatchQueue.global(qos: .userInitiated).async {            
 
             // Bounce back to the main thread to update the UI
             DispatchQueue.main.async {
+                SVProgressHUD.dismiss()
                 self.refreshCtrl.endRefreshing()
             }
         }
