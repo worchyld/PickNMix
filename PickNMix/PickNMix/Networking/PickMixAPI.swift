@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import ObjectMapper
 
 struct Constants {
     class API {
@@ -30,12 +29,6 @@ class PickMixAPI {
 
     static func checkDBAndMakeRequest() {
         // Check DB before we do any request
-        // We know the API never changes.
-        guard let industries = DatabaseManager.getBusinessEntities() else {
-            print ("There are no industries on DB")
-            return
-        }
-        print ("There are \(industries.count) industries in DB")
     }
 
     static func makeRequest() {
@@ -54,9 +47,11 @@ class PickMixAPI {
             do {
 
                 let model = try decoder.decode(Root.self, from: dataResponse)
-                print(model.industries)
-                print(model.triggers)
-                print(model.businessModels)
+//                print(model.industries)
+//                print(model.triggers)
+//                print(model.businessModels)
+
+                self.writeToDB(model: model)
 
                 /*
                  // Old parsing code
@@ -76,8 +71,56 @@ class PickMixAPI {
         }
     }
 
-    private static func old_parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
+    private static func writeToDB(model: Root) {
 
+        let realm = try! Realm()
+        let ind = realm.objects(IndustryEntity.self)
+        print(ind)
+
+        model.industries.forEach({ (entry: String) in
+            print("writing: \(entry)")
+
+            DispatchQueue(label: "background").async {
+                autoreleasepool {
+                    let realm = try! Realm()
+                    realm.beginWrite()
+
+                    model.industries.forEach({ (entry: String) in
+                        let myIndustry = IndustryEntity()
+                        myIndustry.name = entry
+                        print(myIndustry.name)
+                    })
+
+                    print("committing")
+                    try? realm.commitWrite()
+                }
+            }
+        })
+
+
+//
+//        // Query and update from any thread
+//        DispatchQueue(label: "background").async {
+//            autoreleasepool {
+//                let realm = try! Realm()
+//                realm.beginWrite()
+//
+//                model.industries.forEach({ (entry: String) in
+//                    let myIndustry = IndustryEntity()
+//                    myIndustry.name = entry
+//                    print(myIndustry.name)
+//                })
+//
+//                try? realm.commitWrite()
+//            }
+//        }
+
+
+    }
+
+
+    // Here for posterity (not used)
+    private static func old_parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
         guard let jsonArray = jsonResponse as? [String: Any] else {
             let error = NSError(domain: "Can't find JSON", code: 0, userInfo: nil)
             taskCallback(false, error)
@@ -105,8 +148,6 @@ class PickMixAPI {
         print (triggerList)
         print (businessList)
         print ("--------")
-
-
     }
 
 
@@ -142,6 +183,5 @@ class PickMixAPI {
         })
         task.resume()
     }
-
 
 }

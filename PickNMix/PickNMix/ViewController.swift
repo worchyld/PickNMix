@@ -8,6 +8,17 @@
 
 import UIKit
 import SVProgressHUD
+import RealmSwift
+
+class Dog: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var age = 0
+}
+class Person: Object {
+    @objc dynamic var name = ""
+    @objc dynamic var picture: Data? = nil // optionals supported
+    let dogs = List<Dog>()
+}
 
 class ViewController: UIViewController, UIScrollViewDelegate {
 
@@ -26,6 +37,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        print (Realm.Configuration.defaultConfiguration.fileURL as Any)
 
         reloadData()
     }
