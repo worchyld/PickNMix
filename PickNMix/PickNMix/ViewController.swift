@@ -21,7 +21,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnGenerate: UIButton!
 
-    private var model: PageViewModel!
+    //private var model: PageViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

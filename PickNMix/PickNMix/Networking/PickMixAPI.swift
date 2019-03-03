@@ -51,14 +51,31 @@ class PickMixAPI {
                     return }
 
             do {
-                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-                //parse(jsonResponse: jsonResponse)
+                //let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
+                print (dataResponse)
+
+                //let decoder = JSONDecoder()
+
+                //let businesses = try JSONDecoder().decode(BusinessModels.self, from: dataResponse)
+                let triggers = try JSONDecoder().decode(Trigger.self, from: dataResponse)
+                let industries = try JSONDecoder().decode(Industries.self, from: dataResponse)
+
+                //print (businesses)
+                print (triggers)
+                print (industries)
+
+
+                //let model = try decoder.decode([String:[String]].self, from: dataResponse)
+                //print(model as Any)
+
+                /*
+                // Old parsing code
                 parse(jsonResponse: jsonResponse, { (success, error) in
                     if (error != nil) {
                         print ("error >>")
                         print (error?.localizedDescription as Any)
                     }
-                })
+                })*/
             }
             catch let parsingError {
                 print("Error", parsingError)
@@ -96,15 +113,12 @@ class PickMixAPI {
         print (businessList)
         print ("--------")
 
-        var industries:[Industry] = [Industry]()
-        industryList.forEach { (entry: String) in
-            industries.append(Industry(name: entry))
-        }
+//        var industries:[Industry] = [Industry]()
+//        industryList.forEach { (entry: String) in
+//            industries.append(Industry(name: entry))
+//        }
 
         // write to db as a test
-
-
-
     }
 
 

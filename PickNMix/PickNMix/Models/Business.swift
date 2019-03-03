@@ -9,6 +9,11 @@
 import Foundation
 
 // BusinessModels
-struct Business : Decodable {
-    let name : String
+struct BusinessModels : Decodable {
+    let name : [String]
+
+    //Custom Keys
+    enum CodingKeys: String, CodingKey {
+        case name = "businessModels" //Custom keys
+    }
 }

@@ -10,5 +10,6 @@ import Foundation
 
 // Trigger model
 struct Trigger : Decodable {
-    let name : String
+    let triggers : [String]
+
 }
