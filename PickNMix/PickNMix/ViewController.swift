@@ -39,6 +39,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
         print (Realm.Configuration.defaultConfiguration.fileURL as Any)
 
+        let realm = try! Realm()
+        let ind = realm.objects(IndustryEntity.self)
+        print("found: \(ind)\n\(ind.count)")
+
         reloadData()
     }
 

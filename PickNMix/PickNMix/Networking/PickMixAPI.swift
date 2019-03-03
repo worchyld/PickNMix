@@ -74,9 +74,32 @@ class PickMixAPI {
     private static func writeToDB(model: Root) {
 
         let realm = try! Realm()
-        let ind = realm.objects(IndustryEntity.self)
-        print(ind)
 
+        let objectsRealmList = List<IndustryEntity>()
+
+        model.industries.forEach { (entry: String) in
+            let object = IndustryEntity()
+            object.name = entry
+
+            objectsRealmList.append(object)
+        }
+
+        try! realm.write {
+            realm.add(objectsRealmList)
+        }
+
+//        DispatchQueue(label: "background").async {
+//            autoreleasepool {
+//                let realm = try! Realm()
+//                realm.beginWrite()
+//
+//                print("committing")
+//                try? realm.commitWrite()
+//            }
+//        }
+
+
+        /*
         model.industries.forEach({ (entry: String) in
             print("writing: \(entry)")
 
@@ -95,7 +118,10 @@ class PickMixAPI {
                     try? realm.commitWrite()
                 }
             }
-        })
+        })*/
+
+        let ind = realm.objects(IndustryEntity.self)
+        print("found: \(ind)\n\(ind.count)")
 
 
 //
