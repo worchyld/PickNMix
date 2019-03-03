@@ -25,6 +25,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+
+        reloadData()
     }
 
     @IBAction func btnGenerateDidPress(_ sender: UIButton) {
@@ -34,7 +37,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @objc func reloadData() {
         // Move to a background thread to do some long running work
         SVProgressHUD.show()
-        DispatchQueue.global(qos: .userInitiated).async {            
+        DispatchQueue.global(qos: .userInitiated).async {
+
+            PickMixAPI.makeRequest()
 
             // Bounce back to the main thread to update the UI
             DispatchQueue.main.async {

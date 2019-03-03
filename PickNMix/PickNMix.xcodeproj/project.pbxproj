@@ -23,6 +23,8 @@
 		4D2FAAA1222B120900F39376 /* BusinessEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2FAAA0222B120900F39376 /* BusinessEntity.swift */; };
 		4D2FAAA3222B129E00F39376 /* IndustryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2FAAA2222B129E00F39376 /* IndustryEntity.swift */; };
 		4D2FAAA5222B12BA00F39376 /* TriggerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2FAAA4222B12BA00F39376 /* TriggerEntity.swift */; };
+		4DED84F4222C1A1E00CAE80B /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED84F3222C1A1E00CAE80B /* GradientView.swift */; };
+		4DED84F7222C1CB600CAE80B /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED84F6222C1CB600CAE80B /* DBManager.swift */; };
 		88E2FC789B675D6FA061A4E9 /* Pods_PickNMixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA50C7F02EFDCF310B15A59 /* Pods_PickNMixTests.framework */; };
 		92DE304E9F71F6751AE6F550 /* Pods_PickNMix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6106CF6AA53CC5A1E9E4AD /* Pods_PickNMix.framework */; };
 /* End PBXBuildFile section */
@@ -59,6 +61,8 @@
 		4D2FAAA0222B120900F39376 /* BusinessEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessEntity.swift; sourceTree = "<group>"; };
 		4D2FAAA2222B129E00F39376 /* IndustryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryEntity.swift; sourceTree = "<group>"; };
 		4D2FAAA4222B12BA00F39376 /* TriggerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerEntity.swift; sourceTree = "<group>"; };
+		4DED84F3222C1A1E00CAE80B /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		4DED84F6222C1CB600CAE80B /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		A463703675EAE2FFAE147913 /* Pods-PickNMix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNMix.debug.xcconfig"; path = "Target Support Files/Pods-PickNMix/Pods-PickNMix.debug.xcconfig"; sourceTree = "<group>"; };
 		A57B3D30298F085B4636F7CF /* Pods-PickNMixTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNMixTests.release.xcconfig"; path = "Target Support Files/Pods-PickNMixTests/Pods-PickNMixTests.release.xcconfig"; sourceTree = "<group>"; };
 		B7BC02374B412306516AA44E /* Pods-PickNMix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNMix.release.xcconfig"; path = "Target Support Files/Pods-PickNMix/Pods-PickNMix.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 		4D2232552229BA43000C2BB7 /* PickNMix */ = {
 			isa = PBXGroup;
 			children = (
+				4DED84F5222C1C9E00CAE80B /* DB */,
 				4D2232852229C9D6000C2BB7 /* Networking */,
 				4D2232822229C10A000C2BB7 /* Helpers */,
 				4D22327D2229BF29000C2BB7 /* ViewModels */,
@@ -146,7 +151,6 @@
 		4D2232762229BA50000C2BB7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4D2FAAA6222B12C900F39376 /* Entities */,
 				4D2232772229BA94000C2BB7 /* Industry.swift */,
 				4D2232792229BAD5000C2BB7 /* Trigger.swift */,
 				4D22327B2229BAF2000C2BB7 /* Business.swift */,
@@ -167,6 +171,7 @@
 			children = (
 				4D2232832229C117000C2BB7 /* HexColors.swift */,
 				4D223292222A4773000C2BB7 /* Time.swift */,
+				4DED84F3222C1A1E00CAE80B /* GradientView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -187,6 +192,15 @@
 				4D2FAAA4222B12BA00F39376 /* TriggerEntity.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		4DED84F5222C1C9E00CAE80B /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				4D2FAAA6222B12C900F39376 /* Entities */,
+				4DED84F6222C1CB600CAE80B /* DBManager.swift */,
+			);
+			path = DB;
 			sourceTree = "<group>";
 		};
 		9B68E4AAB5A1A3A88F28C82E /* Frameworks */ = {
@@ -354,6 +368,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PickNMix/Pods-PickNMix-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -362,6 +377,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -410,8 +426,10 @@
 				4D2232842229C117000C2BB7 /* HexColors.swift in Sources */,
 				4D223293222A4773000C2BB7 /* Time.swift in Sources */,
 				4D2232572229BA43000C2BB7 /* AppDelegate.swift in Sources */,
+				4DED84F4222C1A1E00CAE80B /* GradientView.swift in Sources */,
 				4D2232782229BA94000C2BB7 /* Industry.swift in Sources */,
 				4D2FAAA5222B12BA00F39376 /* TriggerEntity.swift in Sources */,
+				4DED84F7222C1CB600CAE80B /* DBManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

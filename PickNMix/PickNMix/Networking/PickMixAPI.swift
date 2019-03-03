@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import ObjectMapper
 
 struct Constants {
     class API {
@@ -22,15 +23,6 @@ struct Constants {
             }
             return url
         }
-    }
-}
-
-class DatabaseManager {
-
-    public static func getBusinessEntities() -> Results<IndustryEntity>? {
-        let realm = try! Realm()
-        let industries = realm.objects(IndustryEntity.self)
-        return industries
     }
 }
 
@@ -60,12 +52,13 @@ class PickMixAPI {
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-
-                parse(jsonResponse: jsonResponse)
-
-//                let decoder = JSONDecoder()
-//                let model = try decoder.decode(Industry.self, from: dataResponse) //Decode JSON Response Data
-//                print(model.name)
+                //parse(jsonResponse: jsonResponse)
+                parse(jsonResponse: jsonResponse, { (success, error) in
+                    if (error != nil) {
+                        print ("error >>")
+                        print (error?.localizedDescription as Any)
+                    }
+                })
             }
             catch let parsingError {
                 print("Error", parsingError)
@@ -73,32 +66,44 @@ class PickMixAPI {
         }
     }
 
-    private static func parse(jsonResponse: Any) {
+    private static func parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
 
         guard let jsonArray = jsonResponse as? [String: Any] else {
+            let error = NSError(domain: "Can't find JSON", code: 0, userInfo: nil)
+            taskCallback(false, error)
             return
         }
 
-        guard let industries = jsonArray["industries"] as? [String] else {
+        guard let industryList = jsonArray["industries"] as? [String] else {
             print ("Cannot find industries")
+            let error = NSError(domain: "Can't find industries", code: 0, userInfo: nil)
+            taskCallback(false, error)
             return
         }
-        guard let triggers = jsonArray["triggers"] as? [String] else {
-            print ("Cannot find triggers")
+        guard let triggerList = jsonArray["triggers"] as? [String] else {
+            let error = NSError(domain: "Can't find triggers", code: 0, userInfo: nil)
+            taskCallback(false, error)
             return
         }
-        guard let bmodels = jsonArray["businessModels"] as? [Array<String>] else {
-            print ("Cannot find bmodels")
+        guard let businessList = jsonArray["businessModels"] as? [Array<String>] else {
+            let error = NSError(domain: "Can't find bmodels", code: 0, userInfo: nil)
+            taskCallback(false, error)
             return
         }
 
-        print (industries)
-        print (triggers)
-        //print (bmodels)
+        print (industryList)
+        print (triggerList)
+        print (businessList)
+        print ("--------")
 
-        for item in bmodels {
-            print (item)
+        var industries:[Industry] = [Industry]()
+        industryList.forEach { (entry: String) in
+            industries.append(Industry(name: entry))
         }
+
+        // write to db as a test
+
+
 
     }
 

@@ -7,9 +7,24 @@
 //
 
 import Foundation
+import ObjectMapper
 
 // Industry model
-struct Industry : Decodable {
-    let name : String
+struct Industry {
+    let name: String
 }
 
+/*
+class Industry : NSObject{
+    public private (set) var name : String!
+
+    required init?(map: Map) {
+        super.init()
+    }
+
+    // Mappable
+    func mapping(map: Map) {
+        name    <- map["industries"]
+    }
+}
+*/
