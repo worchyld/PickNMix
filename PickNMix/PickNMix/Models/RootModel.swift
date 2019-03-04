@@ -12,4 +12,8 @@ struct Root: Decodable {
     let industries: [String]
     let triggers: [String]
     let businessModels: [[String]]
+
+    var businessModelsFlattened: [String] {
+        return businessModels.flatMap({$0})
+    }
 }

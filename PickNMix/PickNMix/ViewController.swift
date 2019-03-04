@@ -39,11 +39,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
         print (Realm.Configuration.defaultConfiguration.fileURL as Any)
 
+        // Check DB first
         let realm = try! Realm()
         let ind = realm.objects(IndustryEntity.self)
-        print("found: \(ind)\n\(ind.count)")
-
-        reloadData()
+        if (ind.count > 0) {
+            print ("No need to call website")
+        }
+        else {
+            print ("industries are 0, reload")
+            reloadData()
+        }
     }
 
     @IBAction func btnGenerateDidPress(_ sender: UIButton) {

@@ -17,26 +17,60 @@ class DBManager {
         return industries
     }
 
-    static func save (objects: [Object], completion: @escaping () -> Void) {
-        //        DispatchQueue(label: "background").async {
-        //            autoreleasepool {
-        let realm = try! Realm()
-        realm.beginWrite()
-        realm.add(objects, update:true)
-        try! realm.commitWrite()
-        completion()
-        //            }
-        //        }
-    }
-}
-
-extension Object {
-    static func deleteAll(in realm: Realm) throws {
-        let allObjects = realm.objects(self)
-        try realm.write {
-            realm.delete(allObjects)
+    static func save (object: Object, completion: @escaping () -> Void) {
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                let realm = try! Realm()
+                realm.beginWrite()
+                realm.add(object)
+                try! realm.commitWrite()
+                completion()
+            }
         }
     }
 
+    static func save (objects: [Object], completion: @escaping () -> Void) {
+        let realm = try! Realm()
+        realm.beginWrite()
+        realm.add(objects)
+        try! realm.commitWrite()
+        completion()
+    }
+
+    static func delete (object: Object, completion: @escaping () -> Void) {
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                let realm = try! Realm()
+                realm.beginWrite()
+                realm.delete(object)
+                try! realm.commitWrite()
+                completion()
+            }
+        }
+    }
+
+    static func clearAll() {
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                let realm = try! Realm()
+                realm.beginWrite()
+                realm.deleteAll()
+                try! realm.commitWrite()
+            }
+        }
+    }
+
+    static func clearAll(completion: @escaping () -> Void) {
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                let realm = try! Realm()
+                realm.beginWrite()
+                realm.deleteAll()
+                try! realm.commitWrite()
+                completion()
+            }
+        }
+
+    }
 
 }

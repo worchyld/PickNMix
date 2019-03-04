@@ -15,6 +15,16 @@ enum ModelType : Int {
     case trigger
     case business
 }
+
+struct PageViewModel {
+
+    private func clearDB() {
+        //let realm = try! Realm()
+        //DBManager.clearAll()
+    }
+
+}
+
 //
 //struct PageViewModel {
 //    private let industries : [Industry]

@@ -47,11 +47,10 @@ class PickMixAPI {
             do {
 
                 let model = try decoder.decode(Root.self, from: dataResponse)
-//                print(model.industries)
-//                print(model.triggers)
-//                print(model.businessModels)
 
-                self.writeToDB(model: model)
+                self.writeToDB(model: model, completion: {
+                    print ("realm objects written")
+                })
 
                 /*
                  // Old parsing code
@@ -71,75 +70,52 @@ class PickMixAPI {
         }
     }
 
-    private static func writeToDB(model: Root) {
+//
+    //let ind = realm.objects(IndustryEntity.self)
+    //print("found: \(ind)\n\(ind.count)")
 
-        let realm = try! Realm()
+    private static func writeToDB(model: Root, completion: @escaping () -> Void) {
 
-        let objectsRealmList = List<IndustryEntity>()
+        // Prepare realm objects for DB
+        let objectsIndustryList = List<IndustryEntity>()
+        let objectsBusinessList = List<BusinessEntity>()
+        let objectsTriggerList = List<TriggerEntity>()
 
         model.industries.forEach { (entry: String) in
             let object = IndustryEntity()
             object.name = entry
 
-            objectsRealmList.append(object)
+            objectsIndustryList.append(object)
         }
 
-        try! realm.write {
-            realm.add(objectsRealmList)
+        model.triggers.forEach { (entry: String) in
+            let object = TriggerEntity()
+            object.name = entry
+
+            objectsTriggerList.append(object)
         }
 
-//        DispatchQueue(label: "background").async {
-//            autoreleasepool {
-//                let realm = try! Realm()
-//                realm.beginWrite()
-//
-//                print("committing")
-//                try? realm.commitWrite()
-//            }
-//        }
+        let bmodels = model.businessModelsFlattened
+        bmodels.forEach { (entry: String) in
+            let object = BusinessEntity()
+            object.name = entry
 
+            objectsBusinessList.append(object)
+        }
 
-        /*
-        model.industries.forEach({ (entry: String) in
-            print("writing: \(entry)")
+        // Write objects to Realm DB
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                let realm = try! Realm()
+                realm.beginWrite()
+                realm.add(objectsIndustryList)
+                realm.add(objectsTriggerList)
+                realm.add(objectsBusinessList)
+                try! realm.commitWrite()
 
-            DispatchQueue(label: "background").async {
-                autoreleasepool {
-                    let realm = try! Realm()
-                    realm.beginWrite()
-
-                    model.industries.forEach({ (entry: String) in
-                        let myIndustry = IndustryEntity()
-                        myIndustry.name = entry
-                        print(myIndustry.name)
-                    })
-
-                    print("committing")
-                    try? realm.commitWrite()
-                }
+                completion()
             }
-        })*/
-
-        let ind = realm.objects(IndustryEntity.self)
-        print("found: \(ind)\n\(ind.count)")
-
-
-//
-//        // Query and update from any thread
-//        DispatchQueue(label: "background").async {
-//            autoreleasepool {
-//                let realm = try! Realm()
-//                realm.beginWrite()
-//
-//                model.industries.forEach({ (entry: String) in
-//                    let myIndustry = IndustryEntity()
-//                    myIndustry.name = entry
-//                    print(myIndustry.name)
-//                })
-//
-//                try? realm.commitWrite()
-//            }
-//        }
+        }
 
 
     }
