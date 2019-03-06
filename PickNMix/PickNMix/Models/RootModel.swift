@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Root: Decodable {
+struct RootModel: Decodable {
     let industries: [String]
     let triggers: [String]
     let businessModels: [[String]]

@@ -27,11 +27,46 @@ struct Constants {
 
 class PickMixAPI {
 
-    static func checkDBAndMakeRequest() {
+    static func getData(_ completion: @escaping (Bool, Error?, RootEntity?) -> ()) {
         // Check DB before we do any request
+
+        let rootEntity = RootEntity()
+        guard let industries = rootEntity.industries else {
+            print ("There are no industries on db")
+            return
+        }
+        print ("Found: \(industries.count) industries on db")
+
+        if (industries.count == 0) {
+
+            // Make an API request and update DB
+            self.makeRequest { (success, error) in
+                if (success == false || error != nil) {
+                    // callback: Failure
+                    completion(false, error, nil)
+                }
+                else {
+                    print ("Completed: write")
+                    print (rootEntity)
+
+                    // callback: DB entities
+                    completion(true, nil, rootEntity)
+                }
+            }
+
+        }
+        else {
+            // Make a DB request
+            print ("Making a DB request")
+            print (rootEntity)
+
+            // callback: DB entities
+            completion(true, nil, rootEntity)
+        }
     }
 
-    static func makeRequest() {
+    static func makeRequest(_ completion: @escaping (Bool, Error?) -> ()) {
+
         guard let requestURL = Constants.API.url else {
             print ("No url")
             return
@@ -46,10 +81,12 @@ class PickMixAPI {
             let decoder = JSONDecoder()
             do {
 
-                let model = try decoder.decode(Root.self, from: dataResponse)
+                let model = try decoder.decode(RootModel.self, from: dataResponse)
 
                 self.writeToDB(model: model, completion: {
-                    print ("realm objects written")
+                    print ("Realm objects written")
+
+                    completion(true, nil)
                 })
 
                 /*
@@ -70,11 +107,7 @@ class PickMixAPI {
         }
     }
 
-//
-    //let ind = realm.objects(IndustryEntity.self)
-    //print("found: \(ind)\n\(ind.count)")
-
-    private static func writeToDB(model: Root, completion: @escaping () -> Void) {
+    private static func writeToDB(model: RootModel, completion: @escaping () -> Void) {
 
         // Prepare realm objects for DB
         let objectsIndustryList = List<IndustryEntity>()
@@ -119,39 +152,11 @@ class PickMixAPI {
 
 
     }
+}
 
+// MARK: - RequestURL
 
-    // Here for posterity (not used)
-    private static func old_parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
-        guard let jsonArray = jsonResponse as? [String: Any] else {
-            let error = NSError(domain: "Can't find JSON", code: 0, userInfo: nil)
-            taskCallback(false, error)
-            return
-        }
-
-        guard let industryList = jsonArray["industries"] as? [String] else {
-            print ("Cannot find industries")
-            let error = NSError(domain: "Can't find industries", code: 0, userInfo: nil)
-            taskCallback(false, error)
-            return
-        }
-        guard let triggerList = jsonArray["triggers"] as? [String] else {
-            let error = NSError(domain: "Can't find triggers", code: 0, userInfo: nil)
-            taskCallback(false, error)
-            return
-        }
-        guard let businessList = jsonArray["businessModels"] as? [Array<String>] else {
-            let error = NSError(domain: "Can't find bmodels", code: 0, userInfo: nil)
-            taskCallback(false, error)
-            return
-        }
-
-        print (industryList)
-        print (triggerList)
-        print (businessList)
-        print ("--------")
-    }
-
+extension PickMixAPI {
 
     // lightweight request URL
     private static func executeRequestURL(_ requestURL: URL, taskCallback: @escaping (Bool, Error?, Data?) -> ()) {
@@ -185,5 +190,38 @@ class PickMixAPI {
         })
         task.resume()
     }
+}
 
+
+extension PickMixAPI {
+    // Here for posterity (not used)
+    private static func old_parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
+        guard let jsonArray = jsonResponse as? [String: Any] else {
+            let error = NSError(domain: "Can't find JSON", code: 0, userInfo: nil)
+            taskCallback(false, error)
+            return
+        }
+
+        guard let industryList = jsonArray["industries"] as? [String] else {
+            print ("Cannot find industries")
+            let error = NSError(domain: "Can't find industries", code: 0, userInfo: nil)
+            taskCallback(false, error)
+            return
+        }
+        guard let triggerList = jsonArray["triggers"] as? [String] else {
+            let error = NSError(domain: "Can't find triggers", code: 0, userInfo: nil)
+            taskCallback(false, error)
+            return
+        }
+        guard let businessList = jsonArray["businessModels"] as? [Array<String>] else {
+            let error = NSError(domain: "Can't find bmodels", code: 0, userInfo: nil)
+            taskCallback(false, error)
+            return
+        }
+
+        print (industryList)
+        print (triggerList)
+        print (businessList)
+        print ("--------")
+    }
 }

@@ -10,13 +10,6 @@ import Foundation
 import RealmSwift
 
 class DBManager {
-
-    public static func getBusinessEntities() -> Results<IndustryEntity>? {
-        let realm = try! Realm()
-        let industries = realm.objects(IndustryEntity.self)
-        return industries
-    }
-
     static func save (object: Object, completion: @escaping () -> Void) {
         DispatchQueue(label: "background").async {
             autoreleasepool {
@@ -71,6 +64,28 @@ class DBManager {
             }
         }
 
+    }
+
+}
+
+extension DBManager {
+
+    public static func getBusinessEntities() -> Results<BusinessEntity>? {
+        let realm = try! Realm()
+        let businessModels = realm.objects(BusinessEntity.self)
+        return businessModels
+    }
+
+    public static func getIndustryEntities() -> Results<IndustryEntity>? {
+        let realm = try! Realm()
+        let industries = realm.objects(IndustryEntity.self)
+        return industries
+    }
+
+    public static func getTriggerEntities() -> Results<TriggerEntity>? {
+        let realm = try! Realm()
+        let triggers = realm.objects(TriggerEntity.self)
+        return triggers
     }
 
 }

@@ -10,14 +10,18 @@ import UIKit
 import SVProgressHUD
 import RealmSwift
 
-class Dog: Object {
-    @objc dynamic var name = ""
-    @objc dynamic var age = 0
+class PageViewModel {
+    private let entityModel : RootEntity
+    
+    init(model: RootEntity) {
+        self.entityModel = model
+    }
 }
-class Person: Object {
-    @objc dynamic var name = ""
-    @objc dynamic var picture: Data? = nil // optionals supported
-    let dogs = List<Dog>()
+
+extension PageViewModel : CustomStringConvertible {
+    var description: String {
+        return ("description: \(self.entityModel.description)")
+    }
 }
 
 class ViewController: UIViewController, UIScrollViewDelegate {
@@ -32,23 +36,23 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnGenerate: UIButton!
 
-    //private var model: PageViewModel!
+    private var model: PageViewModel!
+
+    init(model: PageViewModel) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         print (Realm.Configuration.defaultConfiguration.fileURL as Any)
 
-        // Check DB first
-        let realm = try! Realm()
-        let ind = realm.objects(IndustryEntity.self)
-        if (ind.count > 0) {
-            print ("No need to call website")
-        }
-        else {
-            print ("industries are 0, reload")
-            reloadData()
-        }
+        reloadData()
     }
 
     @IBAction func btnGenerateDidPress(_ sender: UIButton) {
@@ -60,12 +64,25 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         SVProgressHUD.show()
         DispatchQueue.global(qos: .userInitiated).async {
 
-            PickMixAPI.makeRequest()
-
+            PickMixAPI.getData({ (success, error, rootEntity) in
+                if (success == false || error != nil || rootEntity == nil) {
+                    print (error?.localizedDescription as Any)
+                }
+                else {
+                    guard let rootEntity = rootEntity else {
+                        SVProgressHUD.dismiss()
+                        self.refreshCtrl.endRefreshing()
+                        return
+                    }
+                    self.model = PageViewModel.init(model: rootEntity)
+                }
+            })
+            
             // Bounce back to the main thread to update the UI
             DispatchQueue.main.async {
                 SVProgressHUD.dismiss()
                 self.refreshCtrl.endRefreshing()
+                print(self.model.description)
             }
         }
     }

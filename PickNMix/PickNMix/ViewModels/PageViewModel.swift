@@ -10,20 +10,6 @@ import Foundation
 import GameplayKit
 import RealmSwift
 
-enum ModelType : Int {
-    case industry
-    case trigger
-    case business
-}
-
-struct PageViewModel {
-
-    private func clearDB() {
-        //let realm = try! Realm()
-        //DBManager.clearAll()
-    }
-
-}
 
 //
 //struct PageViewModel {
