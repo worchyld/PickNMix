@@ -28,39 +28,50 @@ struct Constants {
 class PickMixAPI {
 
     static func getData(_ completion: @escaping (Bool, Error?, RootEntity?) -> ()) {
-        // Check DB before we do any request
 
+        // Check DB before we do any request
         let rootEntity = RootEntity()
         guard let industries = rootEntity.industries else {
-            print ("There are no industries on db")
+            let error = NSError.init(domain: "No DB found", code: 0, userInfo: nil)
+            completion(false, error as Error, nil)
             return
         }
+
         print ("Found: \(industries.count) industries on db")
 
         if (industries.count == 0) {
 
-            // Make an API request and update DB
-            self.makeRequest { (success, error) in
-                if (success == false || error != nil) {
-                    // callback: Failure
-                    completion(false, error, nil)
-                }
-                else {
-                    print ("Completed: write")
-                    print (rootEntity)
+            var returnError: Error?
 
-                    // callback: DB entities
-                    completion(true, nil, rootEntity)
+            // Move to a background thread to do some long running work
+            DispatchQueue.global(qos: .background).async {
+
+                self.makeRequest { (success, error) in
+                    if (success == false || error != nil) {
+                        print (error?.localizedDescription as Any)
+                        returnError = error
+                    }
+                    else {
+                        print ("-- Completed: write --")
+                    }
+                }
+
+                // Bounce back to the main thread to update the UI
+                DispatchQueue.main.async {
+                    autoreleasepool {
+
+                        var success = false
+                        if (returnError != nil) {
+                            success = true
+                        }
+                        completion(success, returnError, rootEntity)
+
+                    }
                 }
             }
-
         }
         else {
-            // Make a DB request
-            print ("Making a DB request")
-            print (rootEntity)
-
-            // callback: DB entities
+            print ("complete: RootEntity")
             completion(true, nil, rootEntity)
         }
     }
@@ -88,18 +99,6 @@ class PickMixAPI {
 
                     completion(true, nil)
                 })
-
-                /*
-                 // Old parsing code
-                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-
-                old_parse(jsonResponse: jsonResponse, { (success, error) in
-                    if (error != nil) {
-                        print ("error >>")
-                        print (error?.localizedDescription as Any)
-                    }
-                })
-                 */
             }
             catch let parsingError {
                 print("Error", parsingError)
@@ -194,6 +193,7 @@ extension PickMixAPI {
 
 
 extension PickMixAPI {
+    
     // Here for posterity (not used)
     private static func old_parse(jsonResponse: Any, _ taskCallback: @escaping (Bool, Error?) -> ()) {
         guard let jsonArray = jsonResponse as? [String: Any] else {

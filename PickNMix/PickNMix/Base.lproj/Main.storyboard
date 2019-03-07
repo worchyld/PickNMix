@@ -18,34 +18,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3m-JQ-xcy">
-                                <rect key="frame" x="20" y="120" width="335" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Industry" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3m-JQ-xcy">
+                                <rect key="frame" x="152" y="120" width="71" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cf5-mf-SpT">
+                                <rect key="frame" x="148.5" y="169" width="78.5" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTp-Eq-hF0">
-                                <rect key="frame" x="127.5" y="164" width="120" height="30"/>
+                                <rect key="frame" x="127.5" y="277" width="120" height="30"/>
                                 <state key="normal" title="Generate another"/>
                                 <connections>
                                     <action selector="btnGenerateDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AmF-hL-G3i"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trigger" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25x-fG-fhN">
+                                <rect key="frame" x="157" y="218" width="61" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="V3m-JQ-xcy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3pY-q1-B3U"/>
-                            <constraint firstItem="NTp-Eq-hF0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ksp-9p-nLs"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V3m-JQ-xcy" secondAttribute="trailing" id="NTu-iT-j7x"/>
-                            <constraint firstItem="V3m-JQ-xcy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TPG-Jb-PKM"/>
-                            <constraint firstItem="V3m-JQ-xcy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="fw6-2x-gvA"/>
-                            <constraint firstItem="NTp-Eq-hF0" firstAttribute="top" secondItem="V3m-JQ-xcy" secondAttribute="bottom" constant="20" id="syb-ug-TD4"/>
+                            <constraint firstItem="V3m-JQ-xcy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="O4m-ha-NM1"/>
+                            <constraint firstItem="Cf5-mf-SpT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="W4j-x2-xVf"/>
+                            <constraint firstItem="NTp-Eq-hF0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XXD-tm-5TH"/>
+                            <constraint firstItem="NTp-Eq-hF0" firstAttribute="top" secondItem="25x-fG-fhN" secondAttribute="bottom" constant="35" id="aTf-16-P8U"/>
+                            <constraint firstItem="V3m-JQ-xcy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="brP-aQ-xym"/>
+                            <constraint firstItem="25x-fG-fhN" firstAttribute="top" secondItem="Cf5-mf-SpT" secondAttribute="bottom" constant="25" id="iT1-HM-Rs3"/>
+                            <constraint firstItem="25x-fG-fhN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kuP-uU-Zcn"/>
+                            <constraint firstItem="Cf5-mf-SpT" firstAttribute="top" secondItem="V3m-JQ-xcy" secondAttribute="bottom" constant="25" id="mKa-q9-h3i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="btnGenerate" destination="NTp-Eq-hF0" id="zOd-tW-Dtr"/>
-                        <outlet property="lblTitle" destination="V3m-JQ-xcy" id="baD-SB-JQc"/>
+                        <outlet property="lblBusiness" destination="Cf5-mf-SpT" id="iE8-fi-Ias"/>
+                        <outlet property="lblIndustry" destination="V3m-JQ-xcy" id="iBj-4r-ogV"/>
+                        <outlet property="lblTrigger" destination="25x-fG-fhN" id="tIb-yU-APM"/>
+                        <outletCollection property="lblOutletCollection" destination="V3m-JQ-xcy" collectionClass="NSMutableArray" id="p3v-oD-GND"/>
+                        <outletCollection property="lblOutletCollection" destination="Cf5-mf-SpT" collectionClass="NSMutableArray" id="0c3-XR-iRu"/>
+                        <outletCollection property="lblOutletCollection" destination="25x-fG-fhN" collectionClass="NSMutableArray" id="Tx2-ny-lO6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

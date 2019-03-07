@@ -8,6 +8,9 @@
 
 import Foundation
 
+//
+// Only used to parse the JSON
+//
 struct RootModel: Decodable {
     let industries: [String]
     let triggers: [String]

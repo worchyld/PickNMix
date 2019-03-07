@@ -11,135 +11,209 @@ import SVProgressHUD
 import RealmSwift
 import GameplayKit
 
-class PageViewModel {
-    private let entityModel : RootEntity
-
-    init(model: RootEntity) {
-        self.entityModel = model
-    }
-
-    /*
-    private struct Mix {
-        var industries: [String]
-        var businesses: [String]
-        var triggers: [String]
-
-        lazy var randomIndustry: String? = {
-            // Shuffle using Gameplaykit
-            let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: industries)
-            guard let first = shuffled.first else {
-                return nil
-            }
-            return first as? String
-        }()
-
-        lazy var randomBusinessModel: String? = {
-            // Shuffle using Gameplaykit
-            let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: businesses)
-            guard let first = shuffled.first else {
-                return nil
-            }
-            return first as? String
-        }()
-
-        lazy var randomTrigger: String? = {
-            // Shuffle using Gameplaykit
-            let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: triggers)
-            guard let first = shuffled.first else {
-                return nil
-            }
-            return first as? String
-        }()
-    }
-
-    func populate() {
-        guard let industries = entityModel.industries else {
-            return
-        }
-        guard let triggers = entityModel.triggers else {
-            return
-        }
-        guard let businessModels = entityModel.businessModels else {
-            return
-        }
-
-        for industry in industries {
-            self.mix?.industries.append(industry.name)
-        }
-
-        for trigger in triggers {
-            self.mix?.triggers.append(trigger.name)
-        }
-
-        for business in businessModels {
-            self.mix?.businesses.append(business.name)
-        }
-    }
- */
+struct Record {
+    let industry: String
+    let business: String
+    let trigger: String
 }
 
-extension PageViewModel : CustomStringConvertible {
+extension Record : CustomStringConvertible {
     var description: String {
-        return ("description: \(self.entityModel.description)")
+        return ( "\(industry) \(business) \(trigger)" )
     }
 }
 
-class ViewController: UIViewController, UIScrollViewDelegate {
+protocol RecordDelegate {
+    func didUpdate(_ record: Record)
+}
 
-    lazy var refreshCtrl: UIRefreshControl = {
-        let ctrl = UIRefreshControl()
-        ctrl.addTarget(self, action: #selector(reloadData), for: .valueChanged)
-        return ctrl
-    }()
+class PageViewModel {
+    public fileprivate (set) var subscribers: [RecordDelegate] = []
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var lblTitle: UILabel!
+    var industries: [String] = [String]()
+    var businessModels: [String] = [String]()
+    var triggers: [String] = [String]()
+
+    deinit {
+        self.removeSubscribers()
+    }
+
+    static func getRandomString(from stringArray: [String]) -> String? {
+        // Shuffle using Gameplaykit
+        let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: stringArray)
+        guard let first = shuffled.first else {
+            return nil
+        }
+        return first as? String
+    }
+
+    func update(with entity: RootEntity?) {
+        guard let entity = entity else {
+            print ("No entity")
+            return
+        }
+
+        guard let dbIndustries = entity.industries else {
+            print ("There are no industries on DB")
+            return
+        }
+        guard let dbBusinesses = entity.businessModels else {
+            print ("There are no business models on DB")
+            return
+        }
+        guard let dbTriggers = entity.triggers else {
+            print ("There are no triggers on DB")
+            return
+        }
+
+        self.industries.removeAll()
+        self.businessModels.removeAll()
+        self.triggers.removeAll()
+
+        dbIndustries.forEach { (industryEntity) in
+            self.industries.append(industryEntity.name)
+        }
+        dbTriggers.forEach { (triggerEntity) in
+            self.triggers.append(triggerEntity.name)
+        }
+        dbBusinesses.forEach { (businessEntity) in
+            self.businessModels.append(businessEntity.name)
+        }
+
+        print ("-------")
+        print (self.industries)
+        print (self.businessModels)
+        print (self.triggers)
+        print ("-------")
+
+        guard let randomIndustry = PageViewModel.getRandomString(from: industries) else {
+            print ("No random industries")
+            return
+        }
+        guard let randomBusiness = PageViewModel.getRandomString(from: businessModels) else {
+            print ("No random business")
+            return
+        }
+        guard let randomTrigger = PageViewModel.getRandomString(from: triggers) else {
+            print ("No random trigger")
+            return
+        }
+
+        let record = Record.init(industry: randomIndustry, business: randomBusiness, trigger: randomTrigger)
+
+        // Notify to update with recordModel
+        notifySubscribers(record: record)
+    }
+
+
+}
+
+extension PageViewModel {
+    func addSubscriber(_ subscriber: RecordDelegate) {
+        self.subscribers.append(subscriber)
+    }
+
+    func notifySubscribers(record: Record) {
+        print ("notifySubscribers")
+        print (subscribers.count)
+
+        let _ = self.subscribers.map({
+            $0.didUpdate(record)
+        })
+    }
+
+    private func removeSubscribers() {
+        self.subscribers.removeAll()
+    }
+
+}
+
+
+class ViewController: UIViewController, UIScrollViewDelegate, RecordDelegate {
+
+    @IBOutlet weak var lblTrigger: UILabel!
+    @IBOutlet weak var lblBusiness: UILabel!
+    @IBOutlet weak var lblIndustry: UILabel!
     @IBOutlet weak var btnGenerate: UIButton!
+    @IBOutlet var lblOutletCollection: [UILabel]!
 
-    private var model: PageViewModel!
+
+    private var model : PageViewModel!
+    private var record: Record?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.model = PageViewModel(model: RootEntity())
+        self.model = PageViewModel()
+        self.model.addSubscriber(self)
 
         print (Realm.Configuration.defaultConfiguration.fileURL as Any)
 
-        reloadData()
-    }
-
-    @IBAction func btnGenerateDidPress(_ sender: UIButton) {
-        print("btnGenerateDidPress:")
-    }
-
-    @objc func reloadData() {
-        // Move to a background thread to do some long running work
-        SVProgressHUD.show()
-        DispatchQueue.global(qos: .userInitiated).async {
-
-            PickMixAPI.getData({ (success, error, rootEntity) in
-                if (success == false || error != nil || rootEntity == nil) {
-                    print (error?.localizedDescription as Any)
-                }
-                else {
-                    guard let rootEntity = rootEntity else {
-                        SVProgressHUD.dismiss()
-                        self.refreshCtrl.endRefreshing()
-                        return
-                    }
-                    self.model = PageViewModel.init(model: rootEntity)
-                }
-            })
-            
-            // Bounce back to the main thread to update the UI
-            DispatchQueue.main.async {
-                SVProgressHUD.dismiss()
-                self.refreshCtrl.endRefreshing()
-                print("Bounce back: \(self.model.description)")
+        reloadData { (success, rootEntity) in
+            if (success) {
+                self.model.update(with: rootEntity)
             }
         }
     }
 
+    @IBAction func btnGenerateDidPress(_ sender: UIButton) {
+        reloadData { (success, rootEntity) in
+            if (success) {
+                self.model.update(with: rootEntity)
+            }
+        }
+    }
+
+    func updateUI() {
+        guard let record = self.record else {
+            return
+        }
+        print ("Updating UI")
+
+        self.lblBusiness.text = record.business
+        self.lblTrigger.text = record.trigger
+        self.lblIndustry.text = record.industry
+
+        let _ = self.lblOutletCollection.map {
+            $0.sizeToFit()
+        }
+    }
+
+
+    // MARK: RecordDelegate protocol methods
+
+    func didUpdate(_ record: Record) {
+        print ("**protocol method fired**")
+        self.record = record
+        updateUI()
+    }
 
 }
 
+extension ViewController {
+
+    func didEndReloading() {
+        SVProgressHUD.dismiss()
+    }
+
+    func reloadData(completion: @escaping (Bool, RootEntity?) -> ()) {
+        SVProgressHUD.show()
+
+        var rootObj: RootEntity?
+
+        PickMixAPI.getData({ (success, error, rootEntity) in
+            self.didEndReloading()
+
+            if (success == false || error != nil || rootEntity == nil) {
+                print (error?.localizedDescription as Any)
+                completion(false, nil)
+            }
+            else {
+                rootObj = rootEntity
+                completion(true, rootObj)
+            }
+        })
+
+    }
+
+}
