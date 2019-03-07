@@ -37,8 +37,6 @@ class PickMixAPI {
             return
         }
 
-        print ("Found: \(industries.count) industries on db")
-
         if (industries.count == 0) {
 
             var returnError: Error?
@@ -71,7 +69,6 @@ class PickMixAPI {
             }
         }
         else {
-            print ("complete: RootEntity")
             completion(true, nil, rootEntity)
         }
     }
@@ -95,8 +92,6 @@ class PickMixAPI {
                 let model = try decoder.decode(RootModel.self, from: dataResponse)
 
                 self.writeToDB(model: model, completion: {
-                    print ("Realm objects written")
-
                     completion(true, nil)
                 })
             }
@@ -203,7 +198,6 @@ extension PickMixAPI {
         }
 
         guard let industryList = jsonArray["industries"] as? [String] else {
-            print ("Cannot find industries")
             let error = NSError(domain: "Can't find industries", code: 0, userInfo: nil)
             taskCallback(false, error)
             return

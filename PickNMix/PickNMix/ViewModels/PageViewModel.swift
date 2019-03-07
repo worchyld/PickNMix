@@ -11,70 +11,101 @@ import GameplayKit
 import RealmSwift
 
 
-//
-//struct PageViewModel {
-//    private let industries : [Industry]
-//    private let triggers : [Trigger]
-//    private let businesses : [Business]
-//
-//    init(businesses: [Business], industries: [Industry], triggers: [Trigger]) {
-//        self.industries = industries
-//        self.businesses = businesses
-//        self.triggers = triggers
-//    }
-//
-//    func getRandomItemFor(model: ModelType)  -> String? {
-//        switch model {
-//        case .business:
-//            return self.getRandomBusiness()
-//        case .industry:
-//            return self.getRandomIndustry()
-//        case .trigger:
-//            return self.getRandomTrigger()
-//        }
-//    }
-//}
-//
-//extension PageViewModel {
-//
-//    // Probably should be refactored
-//
-//    func getRandomIndustry() -> String? {
-//        guard industries.count > 0 else {
-//            return nil
-//        }
-//        
-//        // Shuffle using Gameplaykit
-//        let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: industries)
-//        guard let first = shuffled.first else {
-//            return nil
-//        }
-//        return first  as? String
-//    }
-//
-//    func getRandomBusiness() -> String? {
-//        guard businesses.count > 0 else {
-//            return nil
-//        }
-//
-//        // Shuffle using Gameplaykit
-//        let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: businesses)
-//        guard let first = shuffled.first else {
-//            return nil
-//        }
-//        return first as? String
-//    }
-//    func getRandomTrigger() -> String? {
-//        guard triggers.count > 0 else {
-//            return nil
-//        }
-//
-//        // Shuffle using Gameplaykit
-//        let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: triggers)
-//        guard let first = shuffled.first else {
-//            return nil
-//        }
-//        return first as? String
-//    }
-//
-//}
+struct Record {
+    let industry: String
+    let business: String
+    let trigger: String
+}
+
+extension Record : CustomStringConvertible {
+    var description: String {
+        return ( "\(industry) \(business) \(trigger)" )
+    }
+}
+
+protocol RecordDelegate {
+    func didUpdate(_ record: Record)
+}
+
+class PageViewModel {
+    public fileprivate (set) var subscribers: [RecordDelegate] = []
+
+    var industries: [String] = [String]()
+    var businessModels: [String] = [String]()
+    var triggers: [String] = [String]()
+
+    deinit {
+        self.removeSubscribers()
+    }
+
+    // Shuffle using Gameplaykit
+    static func getRandomString(from stringArray: [String]) -> String? {
+        let shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: stringArray)
+        guard let first = shuffled.first else {
+            return nil
+        }
+        return first as? String
+    }
+
+    func update(with entity: RootEntity?) {
+        guard let entity = entity else {
+            return
+        }
+
+        guard let dbIndustries = entity.industries else {
+            return
+        }
+        guard let dbBusinesses = entity.businessModels else {
+            return
+        }
+        guard let dbTriggers = entity.triggers else {
+            return
+        }
+
+        self.industries.removeAll()
+        self.businessModels.removeAll()
+        self.triggers.removeAll()
+
+        dbIndustries.forEach { (industryEntity) in
+            self.industries.append(industryEntity.name)
+        }
+        dbTriggers.forEach { (triggerEntity) in
+            self.triggers.append(triggerEntity.name)
+        }
+        dbBusinesses.forEach { (businessEntity) in
+            self.businessModels.append(businessEntity.name)
+        }
+
+        guard let randomIndustry = PageViewModel.getRandomString(from: industries) else {
+            return
+        }
+        guard let randomBusiness = PageViewModel.getRandomString(from: businessModels) else {
+            return
+        }
+        guard let randomTrigger = PageViewModel.getRandomString(from: triggers) else {
+            return
+        }
+
+        let record = Record.init(industry: randomIndustry, business: randomBusiness, trigger: randomTrigger)
+
+        // Notify to update with recordModel
+        notifySubscribers(record: record)
+    }
+}
+
+extension PageViewModel {
+    func addSubscriber(_ subscriber: RecordDelegate) {
+        self.subscribers.append(subscriber)
+    }
+
+    func notifySubscribers(record: Record) {
+        let _ = self.subscribers.map({
+            $0.didUpdate(record)
+        })
+    }
+
+    private func removeSubscribers() {
+        self.subscribers.removeAll()
+    }
+}
+
